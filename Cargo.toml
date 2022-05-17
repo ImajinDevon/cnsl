@@ -1,7 +1,7 @@
 [package]
 name = "cnsl"
 description = "A crate that provides methods and macros for interacting with the command line."
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 keywords = ["console", "stdout", "stderr", "stdin", "cli"]
 categories = ["accesibility", "command-line-interface", "command-line-utilities"]
