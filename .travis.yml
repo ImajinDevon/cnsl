@@ -9,6 +9,6 @@ jobs:
       script:
         - cargo build --verbose
         - cargo test --verbose
-    - stage: deploy
-      script:
-        - cargo publish
+#    - stage: deploy
+#      script:
+#        - cargo publish
