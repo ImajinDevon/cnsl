@@ -13,7 +13,7 @@ pub trait Panics<T> {
     fn panics(self) -> T;
 }
 
-impl Panics<String> for io::Result<String> {
+impl<T> Panics<T> for io::Result<T> {
     /// Consumes `self`, then returns the stored value, else the error message.
     /// # Examples
     /// ```
@@ -22,7 +22,7 @@ impl Panics<String> for io::Result<String> {
     ///
     /// let name = stdin::preadln_raw(b"Enter your name").panics();
     /// ```
-    fn panics(self) -> String {
+    fn panics(self) -> T {
         self.unwrap_or_else(|err| panic!("{}", err))
     }
 }

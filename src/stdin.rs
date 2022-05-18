@@ -2,7 +2,9 @@
 use std::io;
 use std::io::Write;
 
-/// A macro to read until a newline from stdin.
+/// Reads a line from stdin, then if present, pop the trailing newline.
+/// This can be either `\n` or `\r\n`.
+/// An optional prompt can be provided.
 /// # Examples
 /// ```
 /// use cnsl::readln;
@@ -21,7 +23,7 @@ macro_rules! readln {
         cnsl::stdin::preadln($fmt)
     };
     ($fmt:expr, $($arg:tt)*) => {
-        cnsl::stdin::preadln(print!($fmt, $($arg)*))
+        cnsl::stdin::preadln($fmt, $($arg)*)
     }
 }
 
@@ -41,10 +43,9 @@ pub fn readln() -> io::Result<String> {
 
     if string.ends_with('\n') {
         string.pop();
-
-        if string.ends_with('\r') {
-            string.pop();
-        }
+    }
+    if string.ends_with('\r') {
+        string.pop();
     }
     Ok(string)
 }
@@ -60,8 +61,8 @@ pub fn readln() -> io::Result<String> {
 /// ```
 #[inline]
 pub fn preadln<D>(prompt: D) -> io::Result<String>
-where
-    D: AsRef<[u8]>,
+    where
+        D: AsRef<[u8]>,
 {
     preadln_raw(prompt.as_ref())
 }
