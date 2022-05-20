@@ -5,25 +5,33 @@ use std::io::Write;
 /// Reads a line from stdin, then if present, pop the trailing newline.
 /// This can be either `\n` or `\r\n`.
 /// An optional prompt can be provided.
+/// Panics on error.
 /// # Examples
 /// ```
 /// use cnsl::readln;
 ///
-/// match readln!("Enter your name: ") {
-///     Ok(name) => println!("Hello, {}!", name),
-///     Err(e) => eprintln!("{}", e),
-/// }
+/// let name = readln!("Enter your name: ");
+/// println!("Hello, {}!", name);
 /// ```
 #[macro_export]
 macro_rules! readln {
     () => {
-        cnsl::stdin::readln()
+        match $crate::stdin::readln() {
+            Ok(v) => v,
+            Err(err) => panic!("could not read line: {}", err),
+        }
     };
     ($fmt:expr) => {
-        cnsl::stdin::preadln($fmt)
+        match $crate::stdin::preadln($fmt) {
+            Ok(v) => v,
+            Err(err) => panic!("could not read line: {}", err),
+        }
     };
     ($fmt:expr, $($arg:tt)*) => {
-        cnsl::stdin::preadln($fmt, $($arg)*)
+        match $crate::stdin::preadln(format!($fmt, $($arg)*)) {
+            Ok(v) => v,
+            Err(err) => panic!("could not read line: {}", err),
+        }
     }
 }
 
@@ -61,8 +69,8 @@ pub fn readln() -> io::Result<String> {
 /// ```
 #[inline]
 pub fn preadln<D>(prompt: D) -> io::Result<String>
-    where
-        D: AsRef<[u8]>,
+where
+    D: AsRef<[u8]>,
 {
     preadln_raw(prompt.as_ref())
 }

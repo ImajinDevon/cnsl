@@ -1,7 +1,8 @@
 //! A module for error handling.
-use std::io;
+use std::fmt::Display;
 
-pub trait Panics<T> {
+/// A trait for unwrapping a result, and panicking with an internal message.
+pub trait Panics<T, E> {
     /// Consumes `self`, then returns the stored value, else panics with the given message.
     /// # Examples
     /// ```
@@ -13,7 +14,12 @@ pub trait Panics<T> {
     fn panics(self) -> T;
 }
 
-impl<T> Panics<T> for io::Result<T> {
+/// This implementation provides a way of unwrapping a result,
+/// and panicking with its error message if it contains an [Err] value.
+impl<T, E> Panics<T, E> for Result<T, E>
+where
+    E: Display,
+{
     /// Consumes `self`, then returns the stored value, else the error message.
     /// # Examples
     /// ```

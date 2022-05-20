@@ -3,6 +3,7 @@ name: Rust
 on:
   push:
     branches: [ master ]
+
   pull_request:
     branches: [ master ]
 
@@ -11,12 +12,13 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Build
       run: cargo build --verbose
-    - name: Run tests
+
+    - name: Tests
       run: cargo test --verbose
