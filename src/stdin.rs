@@ -16,30 +16,21 @@ use std::io::Write;
 #[macro_export]
 macro_rules! readln {
     () => {
-        match $crate::stdin::readln() {
-            Ok(v) => v,
-            Err(err) => panic!("could not read line: {}", err),
-        }
+        $crate::error::RawPanics::panics($crate::stdin::readln())
     };
     ($fmt:expr) => {
-        match $crate::stdin::preadln($fmt) {
-            Ok(v) => v,
-            Err(err) => panic!("could not read line: {}", err),
-        }
+        $crate::error::RawPanics::panics($crate::stdin::preadln($fmt))
     };
     ($fmt:expr, $($arg:tt)*) => {
-        match $crate::stdin::preadln(format!($fmt, $($arg)*)) {
-            Ok(v) => v,
-            Err(err) => panic!("could not read line: {}", err),
-        }
-    }
+        $crate::error::RawPanics::panics($crate::stdin::preadln(format!($fmt, $($arg)*)))
+    };
 }
 
 /// Reads a line from stdin, then if present, pop the trailing newline.
 /// This can be either `\n` or `\r\n`.
 /// # Examples
 /// ```
-/// use cnsl::error::Panics;
+/// use cnsl::error::RawPanics;
 /// use cnsl::stdin;
 ///
 /// let name = stdin::readln().panics();
@@ -61,7 +52,7 @@ pub fn readln() -> io::Result<String> {
 /// Prints the given prompt to stdout, then returns [readln].
 /// # Examples
 /// ```
-/// use cnsl::error::Panics;
+/// use cnsl::error::RawPanics;
 /// use cnsl::stdin;
 ///
 /// let name = stdin::preadln("Enter your name: ").panics();
@@ -78,7 +69,7 @@ where
 /// Prints the given bytes to stdout, then returns [readln].
 /// # Examples
 /// ```
-/// use cnsl::error::Panics;
+/// use cnsl::error::RawPanics;
 /// use cnsl::stdin;
 ///
 /// let name = stdin::preadln_raw(b"Enter your name: ").panics();
