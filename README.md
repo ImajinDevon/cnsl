@@ -1,7 +1,6 @@
 # cnsl
 
-`cnsl` is a crate for writing to the standard output, standard error, and reading from standard input.\
-This crate is lightly coded, and also requires no external dependencies.
+`cnsl` is a crate that provides methods and macros for interacting with the command line.
 
 ![Rust Build Status](https://github.com/ImajinDevon/cnsl/actions/workflows/rust.yml/badge.svg)
 
@@ -11,7 +10,6 @@ This crate is lightly coded, and also requires no external dependencies.
 
 ## readln macro
 
----
 ```rust
 // without a prompt
 ```

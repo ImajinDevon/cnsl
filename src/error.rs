@@ -1,10 +1,6 @@
 //! A module for error handling.
 use std::fmt::Display;
 
-#[deprecated = "Use `cnsl::error::RawPanics` instead."]
-pub trait Panics<T, E> : RawPanics<T, E> {
-}
-
 /// A trait for expecting a value, and panicking with the raw message if it is not present.
 pub trait RawPanics<T, E> {
     /// Consumes `self`, then returns the stored value, else panics with the given message.
